@@ -1,0 +1,33 @@
+.new-note {
+  background-color: #4ea6da;
+
+  .btn {
+    background-color: white;
+    padding: 5px 10px 5px 10px;
+    color: black;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  textarea {
+    outline: none;
+    border: none;
+    resize: none;
+    background-color: #4ea6da;
+    color: rgb(240, 237, 237);
+  }
+  input {
+    background-color: #4ea6da;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid white;
+
+    color: white;
+  }
+}
+
+input::placeholder {
+  color: white;
+}

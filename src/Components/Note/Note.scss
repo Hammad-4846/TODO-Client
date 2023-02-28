@@ -1,0 +1,47 @@
+.note{
+    background-color: #fef68a;
+    border-radius: 10px;
+    padding: 1rem;
+    min-height: 270px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    white-space: pre-wrap;
+
+
+    .info-icon{
+        padding: 8px 0;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+
+        img{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+    }
+
+    .note-info{
+        h3{
+            border-bottom: 1px solid white;
+        }
+
+        a{
+            text-decoration: none;
+            color: rgb(205, 50, 63);
+            font-weight: 600;
+        }
+    }
+}
+
+.note-footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    svg{
+        cursor: pointer;
+    }
+}

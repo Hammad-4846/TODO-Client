@@ -1,0 +1,22 @@
+.search {
+  display: flex;
+  background-color: rgba(233, 233, 233);
+  border-radius: 10px;
+  align-items: center;
+  padding: 5px;
+  gap: 0.3rem;
+  margin-bottom: 1.5em;
+
+  input{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    border: none;
+    background-color: rgba(233, 233, 233);
+
+
+    &:focus{
+        outline: none;
+    }
+  }
+}

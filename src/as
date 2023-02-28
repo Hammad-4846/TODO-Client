@@ -1,0 +1,213 @@
+//const svgRef = useRef();
+//   const [todos, setTodos] = useState([]);
+//   const [newTodo, setNewTodo] = useState({
+//     title: "",
+//     link: "",
+//     icon: "",
+//     note: "",
+//     date: new Date().toISOString().slice(0, 10),
+//   });
+
+//   useEffect(() => {
+//     axios.get("http://localhost:4000/api/todos").then((res) => {
+//       setTodos(res.data);
+//     });
+//   }, []);
+
+//   const handleInputChange = (e) => {
+//     setNewTodo({
+//       ...newTodo,
+//       [e.target.name]: e.target.value,
+//     });
+//   };
+
+//   const handleDateChange = (e) => {
+//     setNewTodo({
+//       ...newTodo,
+//       date: e.target.value,
+//     });
+//   };
+
+//   const handleTodoSubmit = (e) => {
+//     e.preventDefault();
+//     axios.post("http://localhost:4000/api/todos", newTodo).then((res) => {
+//       setTodos([...todos, res.data]);
+//       setNewTodo({
+//         title: "",
+//         link: "",
+//         icon: "",
+//         note: "",
+//         date: new Date().toISOString().slice(0, 10),
+//       });
+//     });
+//   };
+
+//   const handleTodoCheck = (id) => {
+//     const updatedTodos = todos.map((todo) => {
+//       if (todo._id === id) {
+//         todo.checked = !todo.checked;
+//       }
+//       return todo;
+//     });
+//     axios
+//       .put(`http://localhost:4000/api/todos/${id}`, {
+//         checked: updatedTodos.find((todo) => todo._id === id).checked,
+//       })
+//       .then((res) => {
+//         setTodos(updatedTodos);
+//       });
+//   };
+
+//   const handleTodoDragStart = (e, id) => {
+//     e.dataTransfer.setData("text/plain", id);
+//   };
+
+//   const handleTodoDragOver = (e) => {
+//     e.preventDefault();
+//   };
+
+//   const handleTodoDrop = (e, id) => {
+//     e.preventDefault();
+//     const draggedTodoId = e.dataTransfer.getData("text/plain");
+//     const updatedTodos = todos.filter((todo) => todo._id !== draggedTodoId);
+//     const draggedTodo = todos.find((todo) => todo._id === draggedTodoId);
+//     const dropIndex = todos.findIndex((todo) => todo._id === id);
+//     updatedTodos.splice(dropIndex, 0, draggedTodo);
+//     setTodos(updatedTodos);
+//   };
+//   // Use D3 to create a visualization of the todo list
+//   useEffect(() => {
+//     if (todos.length === 0) return;
+
+//     const data = d3.rollups(
+//       todos,
+//       (v) => v.length,
+//       (d) => d3.timeDay(d.date)
+//     );
+
+//     const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+//     const width = 960 - margin.left - margin.right;
+//     const height = 500 - margin.top - margin.bottom;
+
+//     const x = d3
+//       .scaleBand()
+//       .range([0, width])
+//       .padding(0.1)
+//       .domain(data.map(([date]) => date));
+
+//     const y = d3
+//       .scaleLinear()
+//       .range([height, 0])
+//       .domain([0, d3.max(data, ([, count]) => count)]);
+
+//     const svg = d3.select(svgRef.current);
+
+//     svg.selectAll("*").remove();
+
+//     const chart = svg
+//       .append("g")
+//       .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+//     chart
+//       .selectAll(".bar")
+//       .data(data)
+//       .enter()
+//       .append("rect")
+//       .attr("class", "bar")
+//       .attr("x", ([date]) => x(date))
+//       .attr("y", ([, count]) => y(count))
+//       .attr("width", x.bandwidth())
+//       .attr("height", ([, count]) => height - y(count));
+
+//     chart
+//       .append("g")
+//       .attr("class", "x-axis")
+//       .attr("transform", `translate(0, ${height})`)
+//       .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b %d")));
+
+//     chart.append("g").attr("class", "y-axis").call(d3.axisLeft(y));
+//   }, [todos]);
+
+//   return (
+//     <div className="App">
+//       <svg ref={svgRef} />
+//       <h1>Todo List</h1>
+//       <form onSubmit={handleTodoSubmit}>
+//         <label htmlFor="title">Title:</label>
+//         <input
+//           type="text"
+//           id="title"
+//           name="title"
+//           value={newTodo.title}
+//           onChange={handleInputChange}
+//           required
+//         />
+//         <label htmlFor="link">Link:</label>
+//         <input
+//           type="text"
+//           id="link"
+//           name="link"
+//           value={newTodo.link}
+//           onChange={handleInputChange}
+//           required
+//         />
+
+//         <label htmlFor="icon">Icon:</label>
+//         <input
+//           type="text"
+//           id="icon"
+//           name="icon"
+//           value={newTodo.icon}
+//           onChange={handleInputChange}
+//           required
+//         />
+
+//         <label htmlFor="note">Note:</label>
+//         <textarea
+//           id="note"
+//           name="note"
+//           value={newTodo.note}
+//           onChange={handleInputChange}
+//         />
+
+//         <label htmlFor="date">Date:</label>
+//         <input
+//           type="date"
+//           id="date"
+//           name="date"
+//           value={newTodo.date}
+//           onChange={handleDateChange}
+//           required
+//         />
+
+//         <button type="submit">Add Todo</button>
+//       </form>
+
+//       <ul>
+//         {todos.map((todo) => (
+//           <li
+//             key={todo._id}
+//             className={todo.checked ? "checked" : ""}
+//             draggable
+//             onDragStart={(e) => handleTodoDragStart(e, todo._id)}
+//             onDragOver={handleTodoDragOver}
+//             onDrop={(e) => handleTodoDrop(e, todo._id)}
+//           >
+//             <input
+//               type="checkbox"
+//               checked={todo.checked}
+//               onChange={() => handleTodoCheck(todo._id)}
+//             />
+//             <a href={todo.link}>
+//               <i className={todo.icon}></i>
+//               {todo.title}
+//             </a>
+//             <span>{format(new Date(todo.date), "MMMM do yyyy")}</span>
+//             <p>{todo.note}</p>
+//           </li>
+//         ))}
+//       </ul>
+
+//       <div id="chart"></div>
+//     </div>
+//   );

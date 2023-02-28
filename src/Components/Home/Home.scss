@@ -1,0 +1,24 @@
+.container {
+  max-width: 960px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-top: 2rem;
+
+  .filter {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid black;
+  }
+
+  .Chart {
+    margin-bottom: 2rem;
+    border: 1px solid gainsboro;
+    padding: 1rem 0.8rem;
+  }
+}
